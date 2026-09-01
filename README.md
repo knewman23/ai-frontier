@@ -16,7 +16,7 @@ The curriculum these follow is tracked separately at
 
 | # | Notebook | What it covers |
 |---|----------|----------------|
-| 01 | [Derivatives and the Numerical Gradient](notebooks/01-derivatives-and-the-numerical-gradient.ipynb) | What a derivative is, estimated numerically from the limit definition — and why that estimate is never quite exact |
+| 01 | [From Derivatives to a Backprop Graph](notebooks/01-derivatives-and-the-numerical-gradient.ipynb) | Numerical derivatives and their error; a `Value` scalar that records its own operations; graph visualization with graphviz; a backward pass worked out by hand |
 
 ## Running locally
 
@@ -30,6 +30,9 @@ pip install -r requirements.txt
 
 jupyter lab
 ```
+
+Graph drawing also needs the graphviz **system binary**, which pip can't
+install — `brew install graphviz` on macOS, `apt install graphviz` on Debian.
 
 ## Layout
 
