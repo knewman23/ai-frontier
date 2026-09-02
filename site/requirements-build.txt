@@ -1,0 +1,8 @@
+# Dependencies for site/build.py. Kept separate from the notebook runtime
+# requirements at the repo root — CI only needs to render, never execute.
+# ipython is required for nbconvert's IPython3 lexer, without which cell
+# magics such as %matplotlib lose their highlighting.
+ipython>=8.18
+nbconvert>=7.16
+nbformat>=5.10
+pygments>=2.17
