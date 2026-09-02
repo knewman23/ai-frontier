@@ -28,48 +28,19 @@ REPO = "https://github.com/knewman23/ai-frontier"
 CURRICULUM = "https://knewman23.github.io/backprop-to-frontier/"
 PORTFOLIO = "https://knewman23.github.io/"
 
+# Lifted from knewman23.github.io so both sites share one theme component.
 THEME_BOOT = """<script>
-(function () {
-  try {
-    var t = localStorage.getItem('theme');
-    if (t === 'light' || t === 'dark') {
-      document.documentElement.setAttribute('data-theme', t);
-    }
-  } catch (e) {}
-})();
+try {
+  var t = localStorage.getItem("theme");
+  if (t === "dark" || t === "light") document.documentElement.dataset.theme = t;
+} catch (e) { /* private mode: fall through to prefers-color-scheme */ }
 </script>"""
 
-TOGGLE_BUTTON = """<button class="theme-toggle" type="button"
-        aria-label="Switch between light and dark theme" title="Switch theme">
-<svg class="i-moon" width="15" height="15" viewBox="0 0 24 24" fill="none"
-     stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
-     stroke-linejoin="round" aria-hidden="true">
-<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-</svg>
-<svg class="i-sun" width="15" height="15" viewBox="0 0 24 24" fill="none"
-     stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
-     stroke-linejoin="round" aria-hidden="true">
-<circle cx="12" cy="12" r="4.2"/>
-<path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/>
-</svg>
+TOGGLE_BUTTON = """<button class="theme keep" id="theme" type="button" aria-live="polite">
+<svg class="i-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+<svg class="i-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/></svg>
+<span id="theme-text">Dark</span>
 </button>"""
-
-TOGGLE_SCRIPT = """<script>
-(function () {
-  var btn = document.querySelector('.theme-toggle');
-  if (!btn) return;
-  btn.addEventListener('click', function () {
-    var root = document.documentElement;
-    var cur = root.getAttribute('data-theme');
-    if (cur !== 'light' && cur !== 'dark') {
-      cur = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    var next = cur === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    try { localStorage.setItem('theme', next); } catch (e) {}
-  });
-})();
-</script>"""
 
 
 MATHJAX = """<script>
@@ -114,20 +85,17 @@ def shell(body: str, *, title: str, description: str, base: str,
 {extra_head}
 </head>
 <body>
-<header class="masthead"><div>
-{crumbs}
-<span class="spacer"></span>
-<a href="{PORTFOLIO}">Krys Newman's portfolio</a>
+<div class="band"><div class="wrap">
+<span class="crumbs">{crumbs}</span>
 {TOGGLE_BUTTON}
-</div></header>
+</div></div>
 {body}
-<footer class="page"><div>
+<footer class="page"><div class="wrap">
 <span>Krys Newman</span>
 <a href="{REPO}">Source on GitHub</a>
 <a href="{CURRICULUM}">Curriculum</a>
-<a href="{PORTFOLIO}">Portfolio</a>
 </div></footer>
-{TOGGLE_SCRIPT}
+<script src="{base}theme.js"></script>
 </body>
 </html>
 """
@@ -258,8 +226,13 @@ def main() -> None:
 </div>
 </main>"""
 
-        crumbs = (f'<a href="../">{TITLE}</a><span class="sep">/</span>'
-                  f'<span>{html.escape(e["title"])}</span>')
+        crumbs = (
+            f'<a href="{PORTFOLIO}"><b>Krys Newman</b></a>'
+            '<span class="sep">/</span>'
+            '<a href="../">AI Frontier</a>'
+            '<span class="sep">/</span>'
+            f'<span class="here">{html.escape(e["title"])}</span>'
+        )
         dest = OUT / e["slug"]
         dest.mkdir()
         (dest / "index.html").write_text(shell(
@@ -306,9 +279,11 @@ curriculum they follow is tracked separately at
     (OUT / "index.html").write_text(shell(
         index, title=f"{TITLE} — Krys Newman", description=TAGLINE,
         base="",
-        crumbs=f'<span>{TITLE}</span>'))
+        crumbs=(f'<a href="{PORTFOLIO}"><b>Krys Newman</b></a>'
+                '<span class="sep">/</span>'
+                f'<span class="here">{TITLE}</span>')))
 
-    for name in ("favicon.ico", "favicon.png"):
+    for name in ("favicon.ico", "favicon.png", "theme.js"):
         shutil.copy2(SITE / "assets" / name, OUT / name)
 
     (OUT / ".nojekyll").write_text("")
