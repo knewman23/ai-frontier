@@ -1,0 +1,17 @@
+# Runtime for the reference notebooks. Separate from the repo-root
+# requirements.txt, which only covers my own notebooks.
+#
+#   pip install -r references/requirements.txt
+
+numpy>=1.26
+matplotlib>=3.8
+scipy>=1.11
+scikit-learn>=1.4
+pillow>=10.0           # 2-linear-algebra-ii loads an image for its SVD demo
+ipywidgets>=8.1        # interactive controls in the fetched notebooks
+
+# Autodiff. ML Foundations runs the same derivatives through both frameworks;
+# PyTorch alone is enough to follow along, and TensorFlow is a large install,
+# so it is left commented out.
+torch>=2.2
+# tensorflow>=2.16

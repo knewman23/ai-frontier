@@ -1,0 +1,154 @@
+{
+  "title": "Reference notebooks",
+  "kicker": "Reference · Other people's work",
+  "lede": "Public calculus and linear algebra notebooks worth keeping open while working through the curriculum. Diagram-heavy, notation-first, and unapologetic about reaching for numpy, matplotlib and autodiff instead of rebuilding them by hand.",
+  "note": "None of this is my work. Where the licence allows redistribution, a runnable copy lives in <code>references/vendor/</code> in the repo, unmodified and with the upstream licence beside it. Everything else is fetched on demand by <code>references/fetch.py</code> and never committed. Read each source's licence before reusing anything.",
+  "groups": [
+    {
+      "name": "Linear algebra",
+      "blurb": "Vectors, matrices as transformations, eigendecomposition and SVD — drawn, not just derived.",
+      "items": [
+        {
+          "title": "Math: Linear Algebra",
+          "source": "Aurélien Géron — Hands-On Machine Learning, 3rd ed.",
+          "why": "The strongest standalone notebook of the set: every idea gets a matplotlib picture. Vectors and norms, addition as translation, matrices as linear transformations, determinants as signed area, inverses, rank and projections — all in numpy, with the notation written out beside each plot.",
+          "topics": ["Vectors", "Matrix transformations", "Determinants", "Inverse & rank", "numpy", "matplotlib"],
+          "licence": "Apache-2.0",
+          "availability": {"kind": "vendored", "path": "references/vendor/handson-ml3/math_linear_algebra.ipynb"},
+          "links": [
+            {"label": "Upstream notebook", "url": "https://github.com/ageron/handson-ml3/blob/main/math_linear_algebra.ipynb"},
+            {"label": "Open in Colab", "url": "https://colab.research.google.com/github/ageron/handson-ml3/blob/main/math_linear_algebra.ipynb"},
+            {"label": "Repo", "url": "https://github.com/ageron/handson-ml3"}
+          ]
+        },
+        {
+          "title": "ML Foundations: Linear Algebra I & II",
+          "source": "Jon Krohn",
+          "why": "A dense notation reference. Scalars through tensors, norms, dot products, matrix multiplication, eigendecomposition and SVD — each written first in mathematical notation, then in numpy, PyTorch and TensorFlow side by side, which is useful when the same object has three names depending on which library you're reading.",
+          "topics": ["Tensors", "Norms", "Eigendecomposition", "SVD", "PyTorch", "TensorFlow"],
+          "licence": "MIT",
+          "availability": {"kind": "vendored", "path": "references/vendor/ml-foundations/"},
+          "links": [
+            {"label": "Linear Algebra I", "url": "https://github.com/jonkrohn/ML-foundations/blob/master/notebooks/1-intro-to-linear-algebra.ipynb"},
+            {"label": "Linear Algebra II", "url": "https://github.com/jonkrohn/ML-foundations/blob/master/notebooks/2-linear-algebra-ii.ipynb"},
+            {"label": "Repo", "url": "https://github.com/jonkrohn/ML-foundations"}
+          ]
+        },
+        {
+          "title": "Land on Vector Spaces",
+          "source": "Engineers Code — Lorena Barba group, GWU",
+          "why": "Four notebooks that treat a matrix as a thing that moves space around. Animated transformations, change of basis, eigenvectors as the directions a transformation leaves pointing where they were, and SVD built up visually. The closest thing in notebook form to 3Blue1Brown's linear algebra series.",
+          "topics": ["Linear transformations", "Change of basis", "Eigenvectors", "SVD", "Animation"],
+          "licence": "No licence declared — fetched, not redistributed",
+          "availability": {"kind": "fetch", "name": "landlinear"},
+          "links": [
+            {"label": "Notebooks", "url": "https://github.com/engineersCode/EngComp4_landlinear/tree/master/notebook_en"},
+            {"label": "Repo", "url": "https://github.com/engineersCode/EngComp4_landlinear"}
+          ]
+        },
+        {
+          "title": "Computational Linear Algebra",
+          "source": "Rachel Thomas — fast.ai / USF MSDS",
+          "why": "Linear algebra taught backwards from its applications: topic modelling with NMF and SVD, background removal with robust PCA, PageRank via eigendecomposition, QR factorisation implemented and then profiled against LAPACK. numpy, scipy and scikit-learn throughout, with a video lecture per notebook.",
+          "topics": ["SVD", "NMF", "Robust PCA", "PageRank", "QR", "Conditioning"],
+          "licence": "No licence declared — fetched, not redistributed",
+          "availability": {"kind": "fetch", "name": "fastai-nla"},
+          "links": [
+            {"label": "Notebooks", "url": "https://github.com/fastai/numerical-linear-algebra/tree/master/nbs"},
+            {"label": "Course README", "url": "https://github.com/fastai/numerical-linear-algebra"}
+          ]
+        },
+        {
+          "title": "Mathematics for Machine Learning — tutorials",
+          "source": "Deisenroth, Faisal & Ong",
+          "why": "The companion notebooks to the MML book: PCA derived from orthogonal projections, linear regression from maximum likelihood, and a Gaussian mixture fitted with EM. This is where the linear algebra stops being abstract and starts being a model. Pairs with the free PDF of the book.",
+          "topics": ["PCA", "Projections", "Linear regression", "Gaussian mixtures"],
+          "licence": "No licence declared — fetched, not redistributed",
+          "availability": {"kind": "fetch", "name": "mml-book"},
+          "links": [
+            {"label": "PCA tutorial", "url": "https://github.com/mml-book/mml-book.github.io/blob/master/tutorials/tutorial_pca.ipynb"},
+            {"label": "Linear regression tutorial", "url": "https://github.com/mml-book/mml-book.github.io/blob/master/tutorials/tutorial_linear_regression.ipynb"},
+            {"label": "Book (free PDF)", "url": "https://mml-book.github.io/"}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Calculus",
+      "blurb": "Limits, derivatives, gradients and the chain rule, with the plots that make each one obvious.",
+      "items": [
+        {
+          "title": "Math: Differential Calculus",
+          "source": "Aurélien Géron — Hands-On Machine Learning, 3rd ed.",
+          "why": "Slope of a line, then the limit definition, then the derivative — with an animation of the secant collapsing onto the tangent rather than a paragraph asking you to imagine it. Runs through differentiability, the differentiation rules, higher-order derivatives, partial derivatives, gradients, Jacobians and Hessians, and proves each rule at the end.",
+          "topics": ["Limits", "Tangents", "Chain rule", "Gradients", "Jacobians", "Hessians"],
+          "licence": "Apache-2.0",
+          "availability": {"kind": "vendored", "path": "references/vendor/handson-ml3/math_differential_calculus.ipynb"},
+          "links": [
+            {"label": "Upstream notebook", "url": "https://github.com/ageron/handson-ml3/blob/main/math_differential_calculus.ipynb"},
+            {"label": "Open in Colab", "url": "https://colab.research.google.com/github/ageron/handson-ml3/blob/main/math_differential_calculus.ipynb"},
+            {"label": "Repo", "url": "https://github.com/ageron/handson-ml3"}
+          ]
+        },
+        {
+          "title": "ML Foundations: Calculus I & II",
+          "source": "Jon Krohn",
+          "why": "Limits and the delta method, then the rules — product, quotient, chain — then partial derivatives and the gradient, and finally the same derivatives taken automatically by PyTorch and TensorFlow autodiff. The bridge from a derivative computed by hand to the one a framework hands back.",
+          "topics": ["Limits", "Chain rule", "Partial derivatives", "Autodiff", "Gradients"],
+          "licence": "MIT",
+          "availability": {"kind": "vendored", "path": "references/vendor/ml-foundations/"},
+          "links": [
+            {"label": "Calculus I", "url": "https://github.com/jonkrohn/ML-foundations/blob/master/notebooks/3-calculus-i.ipynb"},
+            {"label": "Calculus II", "url": "https://github.com/jonkrohn/ML-foundations/blob/master/notebooks/4-calculus-ii.ipynb"},
+            {"label": "Repo", "url": "https://github.com/jonkrohn/ML-foundations"}
+          ]
+        },
+        {
+          "title": "Machine Learning Refined — course notes",
+          "source": "Watt, Borhani & Katsaggelos",
+          "why": "Visualisation-first treatment of the calculus optimisation actually uses: first- and second-order Taylor approximations drawn on the surface they approximate, gradient descent and Newton's method animated on the same cost function. Leans towards building things from scratch, so read it for the pictures.",
+          "topics": ["Taylor series", "Gradient descent", "Newton's method", "Cost surfaces", "Animation"],
+          "licence": "CC BY-NC-SA 4.0 — fetched, not redistributed",
+          "availability": {"kind": "fetch", "name": "ml-refined"},
+          "links": [
+            {"label": "Notes", "url": "https://github.com/neonwatty/machine-learning-refined/tree/main/notes"},
+            {"label": "Repo", "url": "https://github.com/neonwatty/machine-learning-refined"}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Both, in one place",
+      "blurb": "Book-length references where the maths sits next to the models that use it.",
+      "items": [
+        {
+          "title": "Dive into Deep Learning — maths chapters",
+          "source": "Zhang, Lipton, Li & Smola",
+          "why": "Every page is a runnable notebook and every chapter carries figures. The preliminaries cover linear algebra, calculus and automatic differentiation in the framework you'll actually use; the appendix goes further into the geometry of linear-algebraic operations, eigendecomposition, and single- and multivariable calculus. Notebooks download per page for PyTorch, TensorFlow, JAX or MXNet.",
+          "topics": ["Linear algebra", "Calculus", "Autograd", "Geometry", "Eigendecomposition"],
+          "licence": "CC BY-SA 4.0 (text) / MIT (code) — fetched, not redistributed",
+          "availability": {"kind": "fetch", "name": "d2l"},
+          "links": [
+            {"label": "Linear algebra", "url": "https://d2l.ai/chapter_preliminaries/linear-algebra.html"},
+            {"label": "Calculus", "url": "https://d2l.ai/chapter_preliminaries/calculus.html"},
+            {"label": "Automatic differentiation", "url": "https://d2l.ai/chapter_preliminaries/autograd.html"},
+            {"label": "Geometry & linear-algebraic ops", "url": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops.html"},
+            {"label": "Multivariable calculus", "url": "https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/multivariable-calculus.html"}
+          ]
+        },
+        {
+          "title": "The Matrix Calculus You Need For Deep Learning",
+          "source": "Terence Parr & Jeremy Howard",
+          "why": "An article rather than a notebook, but the notation reference for everything above. Jacobians, the vector chain rule and the element-wise binary operator rules, written in exactly the form they turn up in backpropagation derivations, with every symbol defined as it appears.",
+          "topics": ["Jacobians", "Vector chain rule", "Notation", "Backprop"],
+          "licence": "Free to read online",
+          "availability": {"kind": "link"},
+          "links": [
+            {"label": "Read online", "url": "https://explained.ai/matrix-calculus/"},
+            {"label": "arXiv PDF", "url": "https://arxiv.org/abs/1802.01528"}
+          ]
+        }
+      ]
+    }
+  ]
+}

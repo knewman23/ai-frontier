@@ -18,3 +18,6 @@ env/
 
 # Generated site
 _site/
+
+# Fetched reference material (see references/fetch.py)
+references/external/

@@ -18,6 +18,37 @@ The curriculum these follow is tracked separately at
 |---|----------|----------------|
 | 01 | [From Derivatives to a Backprop Graph](notebooks/01-derivatives-and-the-numerical-gradient.ipynb) | Numerical derivatives and their error; a `Value` scalar that records its own operations; graph visualization with graphviz; a backward pass worked out by hand |
 
+## Reference notebooks
+
+`references/` holds public calculus and linear algebra notebooks by other
+people — the counterweight to the from-scratch notebooks above. They lean on
+numpy, matplotlib and autodiff and spend their effort on diagrams and notation
+instead, which makes them the right thing to have open while working through a
+course. The annotated list is on the
+[references page](https://knewman23.github.io/ai-frontier/references/).
+
+Six of them are permissively licensed and committed here verbatim, licence
+included:
+
+| Notebook | Source | Licence |
+|----------|--------|---------|
+| [Math: Linear Algebra](references/vendor/handson-ml3/math_linear_algebra.ipynb) | Aurélien Géron, Hands-On ML 3e | Apache-2.0 |
+| [Math: Differential Calculus](references/vendor/handson-ml3/math_differential_calculus.ipynb) | Aurélien Géron, Hands-On ML 3e | Apache-2.0 |
+| [Linear Algebra I & II](references/vendor/ml-foundations/) | Jon Krohn, ML Foundations | MIT |
+| [Calculus I & II](references/vendor/ml-foundations/) | Jon Krohn, ML Foundations | MIT |
+
+The rest — fast.ai's Computational Linear Algebra, Land on Vector Spaces, the
+MML book tutorials, Machine Learning Refined, and the D2L maths chapters — are
+unlicensed or share-alike, so they're pulled down on demand instead of
+committed:
+
+```sh
+pip install -r references/requirements.txt
+python references/fetch.py --all
+```
+
+See [references/README.md](references/README.md) for the full breakdown.
+
 ## Running locally
 
 ```sh
@@ -38,6 +69,8 @@ install — `brew install graphviz` on macOS, `apt install graphviz` on Debian.
 
 ```
 notebooks/    numbered, in the order they were worked through
+references/   other people's calculus and linear algebra notebooks
+site/         the static-site generator behind knewman23.github.io/ai-frontier
 ```
 
 Notebooks are committed **with their outputs intact**, so the plots and printed

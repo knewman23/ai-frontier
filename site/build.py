@@ -8,6 +8,7 @@ here. Output goes to ../_site.
 from __future__ import annotations
 
 import html
+import json
 import re
 import shutil
 from pathlib import Path
@@ -27,6 +28,7 @@ TAGLINE = ("Notebooks from a self-study path through neural networks and "
 REPO = "https://github.com/knewman23/ai-frontier"
 CURRICULUM = "https://knewman23.github.io/backprop-to-frontier/"
 PORTFOLIO = "https://knewman23.github.io/"
+REFERENCES = SITE / "references.json"
 
 # Lifted from knewman23.github.io so both sites share one theme component.
 THEME_BOOT = """<script>
@@ -159,6 +161,60 @@ def toc_html(sections: list[tuple[str, str]]) -> str:
             f"<ul>{items}</ul></aside>")
 
 
+def references_page() -> str:
+    """The reference-notebook page, rendered from site/references.json."""
+    data = json.loads(REFERENCES.read_text())
+
+    def item_html(item: dict) -> str:
+        chips = "".join(f"<span>{html.escape(t)}</span>"
+                        for t in item.get("topics", []))
+        links = "".join(
+            f'<a href="{html.escape(l["url"], quote=True)}">{html.escape(l["label"])}</a>'
+            for l in item["links"])
+
+        avail = item.get("availability", {})
+        kind = avail.get("kind", "link")
+        if kind == "vendored":
+            where = (f'In this repo &mdash; <code>{html.escape(avail["path"])}</code>')
+        elif kind == "fetch":
+            where = ("Fetch locally &mdash; "
+                     f'<code>python references/fetch.py {html.escape(avail["name"])}</code>')
+        else:
+            where = "Read at the source"
+
+        return f"""<li class="ref">
+<h3>{html.escape(item["title"])}</h3>
+<p class="ref-source">{html.escape(item["source"])}</p>
+<p class="ref-why">{html.escape(item["why"])}</p>
+<div class="topics">{chips}</div>
+<p class="ref-where"><span class="tag tag-{kind}">{kind}</span> {where}</p>
+<p class="ref-links">{links}<span class="ref-licence">{html.escape(item["licence"])}</span></p>
+</li>"""
+
+    groups = []
+    for g in data["groups"]:
+        items = "".join(item_html(i) for i in g["items"])
+        groups.append(f"""<p class="section-label">{html.escape(g["name"])}</p>
+<p class="group-blurb measure">{html.escape(g["blurb"])}</p>
+<ul class="refs">{items}</ul>""")
+
+    return f"""<main class="wrap">
+<div class="hero measure">
+<p class="kicker">{html.escape(data["kicker"])}</p>
+<h1>{html.escape(data["title"])}</h1>
+<p class="lede">{html.escape(data["lede"])}</p>
+</div>
+<p class="callout measure">{data["note"]}</p>
+{"".join(groups)}
+<div class="measure" style="margin-top:3rem">
+<p style="color:var(--soft);font-size:.9688rem">
+Running them locally is covered in
+<a href="{REPO}/blob/main/references/README.md" style="color:var(--accent)">references/README.md</a>.
+</p>
+</div>
+</main>"""
+
+
 def main() -> None:
     if OUT.exists():
         shutil.rmtree(OUT)
@@ -240,6 +296,9 @@ def main() -> None:
             base="../", crumbs=crumbs, extra_head=MATHJAX))
 
     # index
+    refs = json.loads(REFERENCES.read_text())
+    REF_CHIPS = "".join(f"<span>{html.escape(g['name'])}</span>"
+                        for g in refs["groups"])
     cards = []
     for e in entries:
         num = re.match(r"^(\d+)", e["slug"])
@@ -267,6 +326,20 @@ def main() -> None:
 <ul class="entries">
 {''.join(cards)}
 </ul>
+<p class="section-label">Reference</p>
+<ul class="entries">
+<li class="entry"><a href="references/">
+<div class="num">&rarr;</div>
+<div>
+<h2>Reference notebooks</h2>
+<p>Public calculus and linear algebra notebooks worth keeping open alongside
+these — diagram-heavy, notation-first, and happy to use numpy, matplotlib and
+autodiff rather than rebuild them. Six are committed to the repo and runnable
+locally; the rest are one fetch away.</p>
+<div class="topics">{REF_CHIPS}</div>
+</div>
+</a></li>
+</ul>
 <div class="measure" style="margin-top:3rem">
 <p style="color:var(--muted);font-size:.9688rem">
 Each notebook builds its tools by hand before reaching for a library. The
@@ -283,11 +356,23 @@ curriculum they follow is tracked separately at
                 '<span class="sep">/</span>'
                 f'<span class="here">{TITLE}</span>')))
 
+    refs_dir = OUT / "references"
+    refs_dir.mkdir()
+    refs_data = json.loads(REFERENCES.read_text())
+    (refs_dir / "index.html").write_text(shell(
+        references_page(), title=f'{refs_data["title"]} — {TITLE}',
+        description=refs_data["lede"], base="../",
+        crumbs=(f'<a href="{PORTFOLIO}"><b>Krys Newman</b></a>'
+                '<span class="sep">/</span>'
+                '<a href="../">AI Frontier</a>'
+                '<span class="sep">/</span>'
+                f'<span class="here">{html.escape(refs_data["title"])}</span>')))
+
     for name in ("favicon.ico", "favicon.png", "theme.js"):
         shutil.copy2(SITE / "assets" / name, OUT / name)
 
     (OUT / ".nojekyll").write_text("")
-    print(f"built {len(entries)} notebook page(s) + index -> {OUT}")
+    print(f"built {len(entries)} notebook page(s) + references + index -> {OUT}")
     for e in entries:
         print(f"  /{e['slug']}/  {e['title']}  ({len(e['sections'])} sections)")
 
