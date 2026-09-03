@@ -21,3 +21,7 @@ _site/
 
 # Fetched reference material (see references/fetch.py)
 references/external/
+
+# Working copies of the reference notebooks. references/vendor/ stays pristine
+# so the site renders it and running a notebook doesn't churn the repo.
+references/run/

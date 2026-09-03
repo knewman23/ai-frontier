@@ -19,6 +19,7 @@ from pygments.formatters import HtmlFormatter
 
 ROOT = Path(__file__).resolve().parent.parent
 NOTEBOOKS = ROOT / "notebooks"
+VENDOR = ROOT / "references" / "vendor"
 OUT = ROOT / "_site"
 SITE = Path(__file__).resolve().parent
 
@@ -127,12 +128,13 @@ def parse(nb) -> dict:
     return {"title": title, "lede": lede, "sections": sections}
 
 
-def render_notebook(path: Path) -> tuple[dict, str]:
+def render_notebook(path: Path, *, strip_h1: bool = True) -> tuple[dict, str]:
     nb = nbformat.read(path, as_version=4)
     meta = parse(nb)
     body, _ = HTMLExporter(template_name="basic").from_notebook_node(nb)
-    # The H1 and its lead paragraph become the page header instead.
-    body = re.sub(r"<h1[^>]*>.*?</h1>", "", body, count=1, flags=re.S)
+    if strip_h1:
+        # The H1 and its lead paragraph become the page header instead.
+        body = re.sub(r"<h1[^>]*>.*?</h1>", "", body, count=1, flags=re.S)
     return meta, body
 
 
@@ -150,6 +152,16 @@ def sections_from_body(body: str) -> list[tuple[str, str]]:
     return out
 
 
+def headings_from_body(body: str, levels: str = "2") -> list[tuple[str, str]]:
+    """(id, text) pairs for the given heading levels, read out of the HTML."""
+    out = []
+    for m in re.finditer(rf'<h([{levels}]) id="([^"]+)">(.*?)</h\1>', body, re.S):
+        text = re.sub(r'<a class="anchor-link".*?</a>', "", m.group(3), flags=re.S)
+        text = re.sub(r"<[^>]+>", "", text)
+        out.append((m.group(2), html.unescape(text).strip()))
+    return out
+
+
 def toc_html(sections: list[tuple[str, str]]) -> str:
     if len(sections) < 3:
         return ""
@@ -161,21 +173,91 @@ def toc_html(sections: list[tuple[str, str]]) -> str:
             f"<ul>{items}</ul></aside>")
 
 
+def reference_notebook_pages(data: dict) -> dict[str, dict]:
+    """Render every vendored notebook to its own page under /references/.
+
+    Returns slug -> metadata, so the references index can link to them.
+    """
+    rendered = {}
+    for rel, meta in data.get("vendored", {}).items():
+        path = VENDOR / rel
+        if not path.exists():
+            raise SystemExit(f"references.json points at a missing notebook: {path}")
+
+        # Reference notebooks keep their own H1s — those are their sections.
+        _, body = render_notebook(path, strip_h1=False)
+        headings = headings_from_body(body, levels="12")
+
+        nav = ('<nav class="nb-nav"><a href="../">&larr; All references</a>'
+               f'<a href="{meta["upstream"]}">View the original &rarr;</a></nav>')
+
+        page = f"""<main class="wrap">
+<div class="nb-head measure">
+<p class="num">Reference &middot; {html.escape(meta["author"])}</p>
+<h1>{html.escape(meta["title"])}</h1>
+<p class="lede">{html.escape(meta["lede"])}</p>
+<div class="nb-meta">
+<span>{len(headings)} sections</span>
+<a href="{meta["upstream"]}">Original notebook</a>
+<a href="{meta["colab"]}">Open in Colab</a>
+<a href="{REPO}/blob/main/references/vendor/{rel}">Copy in this repo</a>
+</div>
+</div>
+<p class="callout measure">
+Not my work. Written by {html.escape(meta["author"])} for
+<em>{html.escape(meta["work"])}</em> and reproduced here unmodified under the
+<a href="{meta["licence_url"]}">{html.escape(meta["licence"])}</a> licence.
+The <a href="{meta["upstream"]}">original</a> is the version to cite, fork or
+report problems against.
+</p>
+<div class="nb-layout">
+<article class="nb-body">{body}
+{nav}
+</article>
+{toc_html(headings)}
+</div>
+</main>"""
+
+        crumbs = (f'<a href="{PORTFOLIO}"><b>Krys Newman</b></a>'
+                  '<span class="sep">/</span>'
+                  '<a href="../../">AI Frontier</a>'
+                  '<span class="sep">/</span>'
+                  '<a href="../">Reference</a>'
+                  '<span class="sep">/</span>'
+                  f'<span class="here">{html.escape(meta["title"])}</span>')
+
+        dest = OUT / "references" / meta["slug"]
+        dest.mkdir(parents=True)
+        (dest / "index.html").write_text(shell(
+            page, title=f'{meta["title"]} — {meta["author"]}',
+            description=meta["lede"], base="../../", crumbs=crumbs,
+            extra_head=MATHJAX))
+        rendered[rel] = meta
+    return rendered
+
+
 def references_page() -> str:
     """The reference-notebook page, rendered from site/references.json."""
     data = json.loads(REFERENCES.read_text())
 
+    vendored = data.get("vendored", {})
+
     def item_html(item: dict) -> str:
         chips = "".join(f"<span>{html.escape(t)}</span>"
                         for t in item.get("topics", []))
-        links = "".join(
+        here = "".join(
+            f'<a class="here-link" href="{vendored[rel]["slug"]}/">'
+            f'Read: {html.escape(vendored[rel]["title"])}</a>'
+            for rel in item.get("pages", []) if rel in vendored)
+        links = here + "".join(
             f'<a href="{html.escape(l["url"], quote=True)}">{html.escape(l["label"])}</a>'
             for l in item["links"])
 
         avail = item.get("availability", {})
         kind = avail.get("kind", "link")
         if kind == "vendored":
-            where = (f'In this repo &mdash; <code>{html.escape(avail["path"])}</code>')
+            where = ("Rendered in full below &mdash; runnable copy at "
+                     f'<code>{html.escape(avail["path"])}</code>')
         elif kind == "fetch":
             where = ("Fetch locally &mdash; "
                      f'<code>python references/fetch.py {html.escape(avail["name"])}</code>')
@@ -359,6 +441,7 @@ curriculum they follow is tracked separately at
     refs_dir = OUT / "references"
     refs_dir.mkdir()
     refs_data = json.loads(REFERENCES.read_text())
+    vendored = reference_notebook_pages(refs_data)
     (refs_dir / "index.html").write_text(shell(
         references_page(), title=f'{refs_data["title"]} — {TITLE}',
         description=refs_data["lede"], base="../",
@@ -372,7 +455,10 @@ curriculum they follow is tracked separately at
         shutil.copy2(SITE / "assets" / name, OUT / name)
 
     (OUT / ".nojekyll").write_text("")
-    print(f"built {len(entries)} notebook page(s) + references + index -> {OUT}")
+    print(f"built {len(entries)} notebook page(s) + {len(vendored)} reference "
+          f"page(s) + index -> {OUT}")
+    for meta in vendored.values():
+        print(f"  /references/{meta['slug']}/  {meta['title']}")
     for e in entries:
         print(f"  /{e['slug']}/  {e['title']}  ({len(e['sections'])} sections)")
 

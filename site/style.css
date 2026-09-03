@@ -440,3 +440,12 @@ html { scroll-behavior: smooth; }
 @media (max-width: 34rem) {
   .ref-licence { margin-left: 0; }
 }
+
+.callout a { color: var(--accent); }
+.callout em { font-style: italic; }
+.ref-links .here-link { font-weight: 600; }
+.ref-links .here-link::before { content: "\2192\00a0"; }
+
+/* Upstream "Open in Colab" / "Open in Kaggle" badges: the header already
+   carries those links, and the badges sit awkwardly beside a heading. */
+.nb-body img[src*="colab-badge"], .nb-body img[src*="open-in-kaggle"] { display: none; }

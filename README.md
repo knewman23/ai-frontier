@@ -27,8 +27,9 @@ instead, which makes them the right thing to have open while working through a
 course. The annotated list is on the
 [references page](https://knewman23.github.io/ai-frontier/references/).
 
-Six of them are permissively licensed and committed here verbatim, licence
-included:
+Six of them are permissively licensed, committed here verbatim and rendered in
+full on the site alongside my own notebooks, each carrying its author, licence
+and a link back to the original:
 
 | Notebook | Source | Licence |
 |----------|--------|---------|
@@ -45,7 +46,14 @@ committed:
 ```sh
 pip install -r references/requirements.txt
 python references/fetch.py --all
+
+python references/fetch.py --workspace   # copies vendor/ into references/run/
+jupyter lab references/run/
 ```
+
+Run them from `references/run/` rather than `references/vendor/` — the vendored
+copies stay pristine so the site renders them, and executing one in place adds
+tens of megabytes of embedded animation frames to the diff.
 
 See [references/README.md](references/README.md) for the full breakdown.
 

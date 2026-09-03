@@ -4,6 +4,9 @@ Other people's notebooks, kept here so the calculus and linear algebra behind
 the curriculum is one directory away instead of one search away. Nothing in
 here is mine, and nothing in here is modified.
 
+The six vendored ones are also rendered in full on the site, each with its
+author, licence and a link back to the original.
+
 These are the counterweight to `notebooks/`: those build everything from
 scratch, these use numpy, matplotlib and autodiff freely and spend their effort
 on diagrams and notation instead.
@@ -44,17 +47,31 @@ python references/fetch.py mml-book   # or just one
 | `ml-refined` | [Machine Learning Refined](https://github.com/neonwatty/machine-learning-refined) | CC BY-NC-SA 4.0 |
 | `d2l` | [Dive into Deep Learning](https://d2l.ai/) | CC BY-SA 4.0 / MIT |
 
+These are linked from the references page but not rendered on the site — an
+undeclared licence isn't permission to republish, and the share-alike ones
+would pull their terms onto the site.
+
 `d2l` downloads the full book archive (a few hundred MB) and keeps only the
 preliminaries and mathematics appendix; the others are shallow, sparse clones
 or single files.
 
 ## Running them
 
+`vendor/` is the pristine copy — it's what the site renders, so running a
+notebook in place leaves an enormous diff. The Hands-On ML calculus notebook
+goes from 0.6 MB to 80 MB once its animations have been drawn. Work in `run/`
+instead, which is gitignored:
+
 ```sh
 source .venv/bin/activate
 pip install -r references/requirements.txt
-jupyter lab references/
+
+python references/fetch.py --workspace   # copies vendor/ into run/
+jupyter lab references/run/
 ```
+
+`--workspace` never overwrites a notebook already in `run/`, so re-running it
+just picks up anything new.
 
 PyTorch is included because the ML Foundations notebooks take every derivative
 twice — once by hand and once with autodiff. TensorFlow shows up in 29 cells
