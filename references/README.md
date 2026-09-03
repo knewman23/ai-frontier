@@ -4,8 +4,9 @@ Other people's notebooks, kept here so the calculus and linear algebra behind
 the curriculum is one directory away instead of one search away. Nothing in
 here is mine, and nothing in here is modified.
 
-The six vendored ones are also rendered in full on the site, each with its
-author, licence and a link back to the original.
+The vendored ones are also rendered in full on the site, each with its author,
+licence and a link back to the original, and every section of every one of them
+is in the site's search index.
 
 These are the counterweight to `notebooks/`: those build everything from
 scratch, these use numpy, matplotlib and autodiff freely and spend their effort
@@ -21,12 +22,22 @@ Vendored verbatim, with the upstream licence beside it:
 
 | Path | Source | Licence |
 |------|--------|---------|
-| `vendor/handson-ml3/math_linear_algebra.ipynb` | [Aurélien Géron, Hands-On ML 3e](https://github.com/ageron/handson-ml3) | Apache-2.0 |
-| `vendor/handson-ml3/math_differential_calculus.ipynb` | [Aurélien Géron, Hands-On ML 3e](https://github.com/ageron/handson-ml3) | Apache-2.0 |
-| `vendor/ml-foundations/1-intro-to-linear-algebra.ipynb` | [Jon Krohn, ML Foundations](https://github.com/jonkrohn/ML-foundations) | MIT |
-| `vendor/ml-foundations/2-linear-algebra-ii.ipynb` | [Jon Krohn, ML Foundations](https://github.com/jonkrohn/ML-foundations) | MIT |
-| `vendor/ml-foundations/3-calculus-i.ipynb` | [Jon Krohn, ML Foundations](https://github.com/jonkrohn/ML-foundations) | MIT |
-| `vendor/ml-foundations/4-calculus-ii.ipynb` | [Jon Krohn, ML Foundations](https://github.com/jonkrohn/ML-foundations) | MIT |
+| `vendor/handson-ml3/` (2 notebooks) | [Aurélien Géron, Hands-On ML 3e](https://github.com/ageron/handson-ml3) | Apache-2.0 |
+| `vendor/ml-foundations/` (4 notebooks) | [Jon Krohn, ML Foundations](https://github.com/jonkrohn/ML-foundations) | MIT |
+| `vendor/landlinear/` (4 notebooks + images) | [Land on Vector Spaces](https://github.com/engineersCode/EngComp4_landlinear) | CC BY 4.0 text, [BSD-3 code](https://github.com/engineersCode/EngComp#license) |
+| `vendor/ml-refined/` (7 notebooks) | [Machine Learning Refined](https://github.com/neonwatty/machine-learning-refined) | CC BY-NC-SA 4.0 |
+
+Land on Vector Spaces carries no licence file of its own; it's module 4 of the
+[Engineering Computations](https://github.com/engineersCode/EngComp) series,
+whose repository licenses the whole collection — "all content is under CC-BY
+4.0, and all code is under BSD-3 clause."
+
+Machine Learning Refined is non-commercial and share-alike. It's reproduced
+verbatim, which the licence permits with attribution; this site carries no
+advertising and sells nothing.
+
+Only a subset of the two larger courses is vendored — the chapters that bear on
+the curriculum. `fetch.py` pulls the rest.
 
 ## What isn't
 
@@ -41,15 +52,17 @@ python references/fetch.py mml-book   # or just one
 
 | Name | Source | Licence |
 |------|--------|---------|
-| `landlinear` | [Land on Vector Spaces](https://github.com/engineersCode/EngComp4_landlinear) | none declared |
-| `fastai-nla` | [Computational Linear Algebra](https://github.com/fastai/numerical-linear-algebra) | none declared |
-| `mml-book` | [Mathematics for Machine Learning tutorials](https://github.com/mml-book/mml-book.github.io) | none declared |
-| `ml-refined` | [Machine Learning Refined](https://github.com/neonwatty/machine-learning-refined) | CC BY-NC-SA 4.0 |
+| `landlinear` | [Land on Vector Spaces](https://github.com/engineersCode/EngComp4_landlinear) | the full module, beyond the 4 vendored lessons |
+| `ml-refined` | [Machine Learning Refined](https://github.com/neonwatty/machine-learning-refined) | the whole course, beyond the 7 vendored notebooks |
+| `fastai-nla` | [Computational Linear Algebra](https://github.com/fastai/numerical-linear-algebra) | **no licence declared** |
+| `mml-book` | [Mathematics for Machine Learning tutorials](https://github.com/mml-book/mml-book.github.io) | **no licence declared** |
 | `d2l` | [Dive into Deep Learning](https://d2l.ai/) | CC BY-SA 4.0 / MIT |
 
-These are linked from the references page but not rendered on the site — an
-undeclared licence isn't permission to republish, and the share-alike ones
-would pull their terms onto the site.
+`fastai-nla` and `mml-book` ship no licence file. A public repository grants
+the right to view and fork it on GitHub, not to republish it elsewhere, so
+those two are linked and fetchable but never rendered here. `d2l` is licensed
+to redistribute but is already a polished website whose notebooks carry no
+saved outputs, so it stays linked as well.
 
 `d2l` downloads the full book archive (a few hundred MB) and keeps only the
 preliminaries and mathematics appendix; the others are shallow, sparse clones

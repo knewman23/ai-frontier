@@ -27,21 +27,22 @@ instead, which makes them the right thing to have open while working through a
 course. The annotated list is on the
 [references page](https://knewman23.github.io/ai-frontier/references/).
 
-Six of them are permissively licensed, committed here verbatim and rendered in
-full on the site alongside my own notebooks, each carrying its author, licence
-and a link back to the original:
+Seventeen notebooks whose licence permits redistribution are committed here
+verbatim and rendered in full on the site, each carrying its author, licence and
+a link back to the original:
 
-| Notebook | Source | Licence |
-|----------|--------|---------|
-| [Math: Linear Algebra](references/vendor/handson-ml3/math_linear_algebra.ipynb) | Aurélien Géron, Hands-On ML 3e | Apache-2.0 |
-| [Math: Differential Calculus](references/vendor/handson-ml3/math_differential_calculus.ipynb) | Aurélien Géron, Hands-On ML 3e | Apache-2.0 |
-| [Linear Algebra I & II](references/vendor/ml-foundations/) | Jon Krohn, ML Foundations | MIT |
-| [Calculus I & II](references/vendor/ml-foundations/) | Jon Krohn, ML Foundations | MIT |
+| Notebooks | Source | Licence |
+|-----------|--------|---------|
+| [Linear algebra, differential calculus](references/vendor/handson-ml3/) | Aurélien Géron, Hands-On ML 3e | Apache-2.0 |
+| [Linear Algebra I–II, Calculus I–II](references/vendor/ml-foundations/) | Jon Krohn, ML Foundations | MIT |
+| [Transformations, matrices, eigenvectors, SVD](references/vendor/landlinear/) | Land on Vector Spaces (GWU) | CC BY 4.0 · BSD-3 |
+| [First- and second-order optimisation, norms](references/vendor/ml-refined/) | Machine Learning Refined | CC BY-NC-SA 4.0 |
 
-The rest — fast.ai's Computational Linear Algebra, Land on Vector Spaces, the
-MML book tutorials, Machine Learning Refined, and the D2L maths chapters — are
-unlicensed or share-alike, so they're pulled down on demand instead of
-committed:
+Two sources — fast.ai's Computational Linear Algebra and the MML book tutorials
+— ship no licence file at all. A public repo grants the right to view and fork
+it on GitHub, not to republish it elsewhere, so those stay linked rather than
+mirrored. D2L is licensed to redistribute but is already a website, so it stays
+linked too. All of them are one command away locally:
 
 ```sh
 pip install -r references/requirements.txt
@@ -56,6 +57,13 @@ copies stay pristine so the site renders them, and executing one in place adds
 tens of megabytes of embedded animation frames to the diff.
 
 See [references/README.md](references/README.md) for the full breakdown.
+
+## Search
+
+Every section of every notebook — mine and the references, code included — is
+indexed at build time into `search-index.json` and searched client-side from
+[/search/](https://knewman23.github.io/ai-frontier/search/). No service, no
+dependency: one JSON file and 150 lines of JavaScript.
 
 ## Running locally
 
@@ -78,6 +86,9 @@ install — `brew install graphviz` on macOS, `apt install graphviz` on Debian.
 ```
 notebooks/    numbered, in the order they were worked through
 references/   other people's calculus and linear algebra notebooks
+  vendor/     committed verbatim, licence included — what the site renders
+  run/        working copies for actually running them (gitignored)
+  external/   fetched on demand, never committed (gitignored)
 site/         the static-site generator behind knewman23.github.io/ai-frontier
 ```
 

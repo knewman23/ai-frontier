@@ -2,7 +2,7 @@
   "title": "Reference notebooks",
   "kicker": "Reference · Other people's work",
   "lede": "Public calculus and linear algebra notebooks worth keeping open while working through the curriculum. Diagram-heavy, notation-first, and unapologetic about reaching for numpy, matplotlib and autodiff instead of rebuilding them by hand.",
-  "note": "None of this is my work. The six notebooks whose licence allows it are reproduced here in full, unmodified, with their licence and a link back to the original; a runnable copy of each also lives in <code>references/vendor/</code> in the repo. Everything else is linked at the source and fetched on demand by <code>references/fetch.py</code>. Read each source's licence before reusing anything.",
+  "note": "None of this is my work. Everything whose licence permits redistribution is reproduced here in full and unmodified, each page carrying its author, the work it comes from, its licence and a link back to the original; a runnable copy lives in <code>references/vendor/</code> in the repo. Two sources ship no licence at all, which under GitHub's terms means all rights reserved &mdash; those stay linked at the source and are fetched on demand by <code>references/fetch.py</code>.",
   "groups": [
     {
       "name": "Linear algebra",
@@ -90,10 +90,10 @@
             "SVD",
             "Animation"
           ],
-          "licence": "No licence declared — fetched, not redistributed",
+          "licence": "CC BY 4.0 · BSD-3-Clause",
           "availability": {
-            "kind": "fetch",
-            "name": "landlinear"
+            "kind": "vendored",
+            "path": "references/vendor/landlinear/"
           },
           "links": [
             {
@@ -104,6 +104,12 @@
               "label": "Repo",
               "url": "https://github.com/engineersCode/EngComp4_landlinear"
             }
+          ],
+          "pages": [
+            "landlinear/01_Transform_all_the_Vectors.ipynb",
+            "landlinear/02_Matrix_is_Everywhere.ipynb",
+            "landlinear/03_Eigenvectors_FTW.ipynb",
+            "landlinear/04_SVD.ipynb"
           ]
         },
         {
@@ -251,10 +257,10 @@
             "Cost surfaces",
             "Animation"
           ],
-          "licence": "CC BY-NC-SA 4.0 — fetched, not redistributed",
+          "licence": "CC BY-NC-SA 4.0",
           "availability": {
-            "kind": "fetch",
-            "name": "ml-refined"
+            "kind": "vendored",
+            "path": "references/vendor/ml-refined/"
           },
           "links": [
             {
@@ -265,6 +271,15 @@
               "label": "Repo",
               "url": "https://github.com/neonwatty/machine-learning-refined"
             }
+          ],
+          "pages": [
+            "ml-refined/3_2_First.ipynb",
+            "ml-refined/3_3_Geometry.ipynb",
+            "ml-refined/3_5_Descent.ipynb",
+            "ml-refined/4_2_Quadratic.ipynb",
+            "ml-refined/4_3_Newtons.ipynb",
+            "ml-refined/16_2_Vectors.ipynb",
+            "ml-refined/16_5_Norms.ipynb"
           ]
         }
       ]
@@ -276,7 +291,7 @@
         {
           "title": "Dive into Deep Learning — maths chapters",
           "source": "Zhang, Lipton, Li & Smola",
-          "why": "Every page is a runnable notebook and every chapter carries figures. The preliminaries cover linear algebra, calculus and automatic differentiation in the framework you'll actually use; the appendix goes further into the geometry of linear-algebraic operations, eigendecomposition, and single- and multivariable calculus. Notebooks download per page for PyTorch, TensorFlow, JAX or MXNet.",
+          "why": "Every page is a runnable notebook and every chapter carries figures. The preliminaries cover linear algebra, calculus and automatic differentiation in the framework you'll actually use; the appendix goes further into the geometry of linear-algebraic operations, eigendecomposition, and single- and multivariable calculus. Notebooks download per page for PyTorch, TensorFlow, JAX or MXNet. Left linked rather than mirrored: the book is already a website, and its notebooks ship without saved outputs, so a copy here would read worse than the original.",
           "topics": [
             "Linear algebra",
             "Calculus",
@@ -284,7 +299,7 @@
             "Geometry",
             "Eigendecomposition"
           ],
-          "licence": "CC BY-SA 4.0 (text) / MIT (code) — fetched, not redistributed",
+          "licence": "CC BY-SA 4.0 (text) · MIT (code)",
           "availability": {
             "kind": "fetch",
             "name": "d2l"
@@ -406,6 +421,127 @@
       "licence_url": "https://github.com/jonkrohn/ML-foundations/blob/master/LICENSE",
       "upstream": "https://github.com/jonkrohn/ML-foundations/blob/master/notebooks/4-calculus-ii.ipynb",
       "colab": "https://colab.research.google.com/github/jonkrohn/ML-foundations/blob/master/notebooks/4-calculus-ii.ipynb"
+    },
+    "landlinear/01_Transform_all_the_Vectors.ipynb": {
+      "slug": "landlinear-transformations",
+      "title": "Transform all the vectors",
+      "lede": "What a vector is, from the physicist's view and the computer scientist's; addition and scaling drawn rather than defined; basis vectors, span and linear combination; and a matrix as the thing that moves one space onto another, with rotation, shear and scaling animated.",
+      "author": "Lorena A. Barba & Tingyu Wang",
+      "work": "Engineering Computations, Module 4: Land on Vector Spaces",
+      "licence": "CC BY 4.0 (text) · BSD-3-Clause (code)",
+      "licence_url": "https://github.com/engineersCode/EngComp#license",
+      "upstream": "https://github.com/engineersCode/EngComp4_landlinear/blob/master/notebook_en/01_Transform_all_the_Vectors.ipynb",
+      "binder": "https://mybinder.org/v2/gh/engineersCode/EngComp4_landlinear/master"
+    },
+    "landlinear/02_Matrix_is_Everywhere.ipynb": {
+      "slug": "landlinear-matrix-everywhere",
+      "title": "The matrix is everywhere",
+      "lede": "One object seen three ways, each visualised: a matrix as a transformation, as a system of equations, and as a change of basis. Norms, the circle that maps to an ellipse, inconsistent and underdetermined systems, and what rank deficiency looks like in 3D.",
+      "author": "Lorena A. Barba & Tingyu Wang",
+      "work": "Engineering Computations, Module 4: Land on Vector Spaces",
+      "licence": "CC BY 4.0 (text) · BSD-3-Clause (code)",
+      "licence_url": "https://github.com/engineersCode/EngComp#license",
+      "upstream": "https://github.com/engineersCode/EngComp4_landlinear/blob/master/notebook_en/02_Matrix_is_Everywhere.ipynb",
+      "binder": "https://mybinder.org/v2/gh/engineersCode/EngComp4_landlinear/master"
+    },
+    "landlinear/03_Eigenvectors_FTW.ipynb": {
+      "slug": "landlinear-eigenvectors",
+      "title": "Eigenvectors for the win",
+      "lede": "The geometry of eigendecomposition: the ellipse's axes line up with the eigenvectors, symmetric matrices give orthogonal ones, and diagonalisation turns out to be a change of basis. Computed with numpy and sympy, then applied to PageRank and to matrix population models.",
+      "author": "Lorena A. Barba & Tingyu Wang",
+      "work": "Engineering Computations, Module 4: Land on Vector Spaces",
+      "licence": "CC BY 4.0 (text) · BSD-3-Clause (code)",
+      "licence_url": "https://github.com/engineersCode/EngComp#license",
+      "upstream": "https://github.com/engineersCode/EngComp4_landlinear/blob/master/notebook_en/03_Eigenvectors_FTW.ipynb",
+      "binder": "https://mybinder.org/v2/gh/engineersCode/EngComp4_landlinear/master"
+    },
+    "landlinear/04_SVD.ipynb": {
+      "slug": "landlinear-svd",
+      "title": "Stick to the essentials: SVD",
+      "lede": "Singular value decomposition built up out of the transformations from the earlier lessons, then put to work compressing an image and reading the structure out of a matrix.",
+      "author": "Lorena A. Barba & Tingyu Wang",
+      "work": "Engineering Computations, Module 4: Land on Vector Spaces",
+      "licence": "CC BY 4.0 (text) · BSD-3-Clause (code)",
+      "licence_url": "https://github.com/engineersCode/EngComp#license",
+      "upstream": "https://github.com/engineersCode/EngComp4_landlinear/blob/master/notebook_en/04_SVD.ipynb",
+      "binder": "https://mybinder.org/v2/gh/engineersCode/EngComp4_landlinear/master"
+    },
+    "ml-refined/3_2_First.ipynb": {
+      "slug": "mlr-first-order-condition",
+      "title": "The First-Order Optimality Condition",
+      "lede": "Where the derivative vanishes, and why that condition is what every first-order method is chasing — with the stationary points drawn on the functions themselves.",
+      "author": "Jeremy Watt, Reza Borhani & Aggelos Katsaggelos",
+      "work": "Machine Learning Refined (Cambridge University Press)",
+      "licence": "CC BY-NC-SA 4.0",
+      "licence_url": "https://github.com/neonwatty/machine-learning-refined/blob/main/LICENSE.md",
+      "upstream": "https://github.com/neonwatty/machine-learning-refined/blob/main/notes/3_First_order_methods/3_2_First.ipynb",
+      "colab": "https://colab.research.google.com/github/neonwatty/machine-learning-refined/blob/main/notes/3_First_order_methods/3_2_First.ipynb"
+    },
+    "ml-refined/3_3_Geometry.ipynb": {
+      "slug": "mlr-taylor-geometry",
+      "title": "The Geometry of First-Order Taylor Series",
+      "lede": "The first-order Taylor approximation as a tangent hyperplane, drawn on the surface it approximates. This is the picture that makes the gradient's role in descent obvious.",
+      "author": "Jeremy Watt, Reza Borhani & Aggelos Katsaggelos",
+      "work": "Machine Learning Refined (Cambridge University Press)",
+      "licence": "CC BY-NC-SA 4.0",
+      "licence_url": "https://github.com/neonwatty/machine-learning-refined/blob/main/LICENSE.md",
+      "upstream": "https://github.com/neonwatty/machine-learning-refined/blob/main/notes/3_First_order_methods/3_3_Geometry.ipynb",
+      "colab": "https://colab.research.google.com/github/neonwatty/machine-learning-refined/blob/main/notes/3_First_order_methods/3_3_Geometry.ipynb"
+    },
+    "ml-refined/3_5_Descent.ipynb": {
+      "slug": "mlr-gradient-descent",
+      "title": "Gradient Descent",
+      "lede": "Gradient descent derived from the first-order approximation, then run and animated across cost surfaces — including what the step size does to the path it takes.",
+      "author": "Jeremy Watt, Reza Borhani & Aggelos Katsaggelos",
+      "work": "Machine Learning Refined (Cambridge University Press)",
+      "licence": "CC BY-NC-SA 4.0",
+      "licence_url": "https://github.com/neonwatty/machine-learning-refined/blob/main/LICENSE.md",
+      "upstream": "https://github.com/neonwatty/machine-learning-refined/blob/main/notes/3_First_order_methods/3_5_Descent.ipynb",
+      "colab": "https://colab.research.google.com/github/neonwatty/machine-learning-refined/blob/main/notes/3_First_order_methods/3_5_Descent.ipynb"
+    },
+    "ml-refined/4_2_Quadratic.ipynb": {
+      "slug": "mlr-quadratics",
+      "title": "Quadratic Functions",
+      "lede": "Quadratics as the model that second-order methods assume, with curvature read off the Hessian and drawn on the surface it describes.",
+      "author": "Jeremy Watt, Reza Borhani & Aggelos Katsaggelos",
+      "work": "Machine Learning Refined (Cambridge University Press)",
+      "licence": "CC BY-NC-SA 4.0",
+      "licence_url": "https://github.com/neonwatty/machine-learning-refined/blob/main/LICENSE.md",
+      "upstream": "https://github.com/neonwatty/machine-learning-refined/blob/main/notes/4_Second_order_methods/4_2_Quadratic.ipynb",
+      "colab": "https://colab.research.google.com/github/neonwatty/machine-learning-refined/blob/main/notes/4_Second_order_methods/4_2_Quadratic.ipynb"
+    },
+    "ml-refined/4_3_Newtons.ipynb": {
+      "slug": "mlr-newtons-method",
+      "title": "Newton's Method",
+      "lede": "Newton's method as repeated quadratic approximation, animated against gradient descent on the same function — where curvature information buys faster convergence, and where it doesn't.",
+      "author": "Jeremy Watt, Reza Borhani & Aggelos Katsaggelos",
+      "work": "Machine Learning Refined (Cambridge University Press)",
+      "licence": "CC BY-NC-SA 4.0",
+      "licence_url": "https://github.com/neonwatty/machine-learning-refined/blob/main/LICENSE.md",
+      "upstream": "https://github.com/neonwatty/machine-learning-refined/blob/main/notes/4_Second_order_methods/4_3_Newtons.ipynb",
+      "colab": "https://colab.research.google.com/github/neonwatty/machine-learning-refined/blob/main/notes/4_Second_order_methods/4_3_Newtons.ipynb"
+    },
+    "ml-refined/16_2_Vectors.ipynb": {
+      "slug": "mlr-vectors",
+      "title": "Vectors and Vector Operations",
+      "lede": "The linear algebra appendix: vectors, addition, scaling, inner products and projections in numpy, with every operation drawn.",
+      "author": "Jeremy Watt, Reza Borhani & Aggelos Katsaggelos",
+      "work": "Machine Learning Refined (Cambridge University Press)",
+      "licence": "CC BY-NC-SA 4.0",
+      "licence_url": "https://github.com/neonwatty/machine-learning-refined/blob/main/LICENSE.md",
+      "upstream": "https://github.com/neonwatty/machine-learning-refined/blob/main/notes/16_Linear_algebra/16_2_Vectors.ipynb",
+      "colab": "https://colab.research.google.com/github/neonwatty/machine-learning-refined/blob/main/notes/16_Linear_algebra/16_2_Vectors.ipynb"
+    },
+    "ml-refined/16_5_Norms.ipynb": {
+      "slug": "mlr-norms",
+      "title": "Vector and Matrix Norms",
+      "lede": "The l1, l2 and l-infinity norms with their unit balls side by side, and the matrix norms that turn up in regularisation.",
+      "author": "Jeremy Watt, Reza Borhani & Aggelos Katsaggelos",
+      "work": "Machine Learning Refined (Cambridge University Press)",
+      "licence": "CC BY-NC-SA 4.0",
+      "licence_url": "https://github.com/neonwatty/machine-learning-refined/blob/main/LICENSE.md",
+      "upstream": "https://github.com/neonwatty/machine-learning-refined/blob/main/notes/16_Linear_algebra/16_5_Norms.ipynb",
+      "colab": "https://colab.research.google.com/github/neonwatty/machine-learning-refined/blob/main/notes/16_Linear_algebra/16_5_Norms.ipynb"
     }
   }
 }

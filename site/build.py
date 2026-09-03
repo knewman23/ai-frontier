@@ -23,6 +23,8 @@ VENDOR = ROOT / "references" / "vendor"
 OUT = ROOT / "_site"
 SITE = Path(__file__).resolve().parent
 
+SEARCH: list[dict] = []
+
 TITLE = "AI Frontier"
 TAGLINE = ("Notebooks from a self-study path through neural networks and "
            "machine learning — built from scratch, in order.")
@@ -55,6 +57,23 @@ window.MathJax = {
 };
 </script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>"""
+
+
+SEARCH_PAGE = """<main class="wrap">
+<div class="hero measure">
+<p class="kicker">Search</p>
+<h1>Find it</h1>
+<p class="lede">Every section of every notebook here &mdash; mine and the
+references &mdash; indexed by heading. Code included, so searching for
+<code>np.linalg.svd</code> works as well as searching for eigenvector.</p>
+</div>
+<form class="search-form" id="search-form" role="search">
+<input id="q" type="search" name="q" autocomplete="off" autofocus
+ placeholder="derivative, chain rule, SVD, norm&hellip;" aria-label="Search">
+</form>
+<p class="search-status" id="status" aria-live="polite"></p>
+<ul class="results" id="results"></ul>
+</main>"""
 
 
 def strip_md(text: str) -> str:
@@ -90,7 +109,12 @@ def shell(body: str, *, title: str, description: str, base: str,
 <body>
 <div class="band"><div class="wrap">
 <span class="crumbs">{crumbs}</span>
+<span class="band-tools">
+<a class="band-search" href="{base}search/">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+Search</a>
 {TOGGLE_BUTTON}
+</span>
 </div></div>
 {body}
 <footer class="page"><div class="wrap">
@@ -162,6 +186,60 @@ def headings_from_body(body: str, levels: str = "2") -> list[tuple[str, str]]:
     return out
 
 
+TAG_RE = re.compile(r"<[^>]+>")
+HEAD_RE = re.compile(r'<h([1-3]) id="([^"]+)">(.*?)</h\1>', re.S)
+
+
+# Enough TeX to keep headings and snippets readable in search results; the
+# reference notebooks put real notation in their headings.
+TEX_SYMBOLS = {
+    "neq": "\u2260", "leq": "\u2264", "geq": "\u2265", "times": "\u00d7",
+    "cdot": "\u00b7", "partial": "\u2202", "nabla": "\u2207",
+    "infty": "\u221e", "approx": "\u2248", "rightarrow": "\u2192",
+    "to": "\u2192", "in": "\u2208", "sum": "\u03a3", "int": "\u222b",
+    "sqrt": "\u221a", "pm": "\u00b1", "ldots": "\u2026", "dots": "\u2026",
+}
+
+
+def detex(text: str) -> str:
+    text = re.sub(r"\\d?frac\{([^{}]*)\}\{([^{}]*)\}", r"\1/\2", text)
+    text = re.sub(r"\\([a-zA-Z]+)",
+                  lambda m: TEX_SYMBOLS.get(m.group(1), m.group(1)), text)
+    text = text.replace("$", "").replace("\\", " ")
+    return re.sub(r"[{}]", "", text)
+
+
+def plain(fragment: str) -> str:
+    """Rendered HTML -> searchable plain text."""
+    fragment = re.sub(r"<(script|style)\b.*?</\1>", " ", fragment, flags=re.S)
+    fragment = re.sub(r'<a class="anchor-link".*?</a>', "", fragment, flags=re.S)
+    text = detex(html.unescape(TAG_RE.sub(" ", fragment)))
+    return " ".join(text.split())
+
+
+def index_records(body: str, *, url: str, title: str, kind: str,
+                  source: str = "") -> list[dict]:
+    """One record per section, so a hit can link to the heading it came from.
+
+    Splitting on headings keeps snippets close to what the reader is looking
+    for; a whole-notebook record would match everything and locate nothing.
+    """
+    marks = [(m.start(), m.end(), m.group(2), plain(m.group(3)))
+             for m in HEAD_RE.finditer(body)]
+    records = []
+
+    lead = plain(body[:marks[0][0]] if marks else body)
+    if lead:
+        records.append({"t": title, "h": "", "u": url, "k": kind,
+                        "s": source, "x": lead[:1500]})
+    for i, (_, end, anchor, heading) in enumerate(marks):
+        stop = marks[i + 1][0] if i + 1 < len(marks) else len(body)
+        text = plain(body[end:stop])
+        records.append({"t": title, "h": heading, "u": f"{url}#{anchor}",
+                        "k": kind, "s": source, "x": text[:1500]})
+    return records
+
+
 def toc_html(sections: list[tuple[str, str]]) -> str:
     if len(sections) < 3:
         return ""
@@ -178,6 +256,9 @@ def reference_notebook_pages(data: dict) -> dict[str, dict]:
 
     Returns slug -> metadata, so the references index can link to them.
     """
+    for assets in sorted(VENDOR.glob("*/images")):
+        shutil.copytree(assets, OUT / "references" / "images", dirs_exist_ok=True)
+
     rendered = {}
     for rel, meta in data.get("vendored", {}).items():
         path = VENDOR / rel
@@ -191,6 +272,11 @@ def reference_notebook_pages(data: dict) -> dict[str, dict]:
         nav = ('<nav class="nb-nav"><a href="../">&larr; All references</a>'
                f'<a href="{meta["upstream"]}">View the original &rarr;</a></nav>')
 
+        run_links = "".join(
+            f'<a href="{meta[key]}">{label}</a>'
+            for key, label in (("colab", "Open in Colab"), ("binder", "Run on Binder"))
+            if meta.get(key))
+
         page = f"""<main class="wrap">
 <div class="nb-head measure">
 <p class="num">Reference &middot; {html.escape(meta["author"])}</p>
@@ -199,7 +285,7 @@ def reference_notebook_pages(data: dict) -> dict[str, dict]:
 <div class="nb-meta">
 <span>{len(headings)} sections</span>
 <a href="{meta["upstream"]}">Original notebook</a>
-<a href="{meta["colab"]}">Open in Colab</a>
+{run_links}
 <a href="{REPO}/blob/main/references/vendor/{rel}">Copy in this repo</a>
 </div>
 </div>
@@ -233,6 +319,9 @@ report problems against.
             description=meta["lede"], base="../../", crumbs=crumbs,
             extra_head=MATHJAX))
         rendered[rel] = meta
+        SEARCH.extend(index_records(
+            body, url=f"references/{meta['slug']}/", title=meta["title"],
+            kind="reference", source=f'{meta["author"]} — {meta["work"]}'))
     return rendered
 
 
@@ -371,6 +460,10 @@ def main() -> None:
             '<span class="sep">/</span>'
             f'<span class="here">{html.escape(e["title"])}</span>'
         )
+        SEARCH.extend(index_records(
+            body, url=f'{e["slug"]}/', title=e["title"], kind="notebook",
+            source="Krys Newman"))
+
         dest = OUT / e["slug"]
         dest.mkdir()
         (dest / "index.html").write_text(shell(
@@ -451,7 +544,24 @@ curriculum they follow is tracked separately at
                 '<span class="sep">/</span>'
                 f'<span class="here">{html.escape(refs_data["title"])}</span>')))
 
-    for name in ("favicon.ico", "favicon.png", "theme.js"):
+    search_dir = OUT / "search"
+    search_dir.mkdir()
+    (search_dir / "index.html").write_text(shell(
+        SEARCH_PAGE, title=f"Search — {TITLE}",
+        description=f"Search every notebook and reference on {TITLE}.",
+        base="../",
+        crumbs=(f'<a href="{PORTFOLIO}"><b>Krys Newman</b></a>'
+                '<span class="sep">/</span>'
+                '<a href="../">AI Frontier</a>'
+                '<span class="sep">/</span>'
+                '<span class="here">Search</span>'),
+        extra_head='<script defer src="../search.js"></script>'))
+    (OUT / "search-index.json").write_text(
+        json.dumps(SEARCH, separators=(",", ":"), ensure_ascii=False))
+    print(f"  search index: {len(SEARCH)} sections, "
+          f"{(OUT / 'search-index.json').stat().st_size // 1024} KB")
+
+    for name in ("favicon.ico", "favicon.png", "theme.js", "search.js"):
         shutil.copy2(SITE / "assets" / name, OUT / name)
 
     (OUT / ".nojekyll").write_text("")

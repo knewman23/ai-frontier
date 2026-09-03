@@ -449,3 +449,66 @@ html { scroll-behavior: smooth; }
 /* Upstream "Open in Colab" / "Open in Kaggle" badges: the header already
    carries those links, and the badges sit awkwardly beside a heading. */
 .nb-body img[src*="colab-badge"], .nb-body img[src*="open-in-kaggle"] { display: none; }
+
+/* ---------- search ---------- */
+
+.band-tools { display: flex; align-items: center; gap: 12px; flex: none; }
+.band-search {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--band-dim); text-decoration: none;
+  padding: 5px 0;
+}
+.band-search:hover { color: var(--band-ink); }
+.band-search svg { width: 12px; height: 12px; }
+
+.search-form { margin: 2.5rem 0 0; }
+#q {
+  width: 100%; max-width: 34rem; font-family: var(--sans); font-size: 1.0625rem;
+  color: var(--ink); background: var(--card);
+  border: 1px solid var(--line-2); border-radius: 3px;
+  padding: 0.7rem 0.9rem; -webkit-appearance: none;
+}
+#q:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+#q::placeholder { color: var(--faint); }
+
+.search-status {
+  margin: 0.9rem 0 0; font-family: var(--mono); font-size: 10px;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--faint);
+}
+
+.results { list-style: none; margin: 1.5rem 0 0; padding: 0; }
+.result { border-top: 1px solid var(--line); }
+.result:last-child { border-bottom: 1px solid var(--line); }
+.result > a {
+  display: block; padding: 1.1rem 0; text-decoration: none; color: inherit;
+  transition: background 0.12s ease;
+}
+.result > a:hover { background: var(--sunken); }
+.result-where {
+  margin: 0 0 0.35rem; font-family: var(--sans); font-weight: 600;
+  font-size: 1.0312rem; line-height: 1.35; display: flex;
+  flex-wrap: wrap; align-items: baseline; gap: 0.5rem;
+}
+.result > a:hover .result-where { color: var(--accent); }
+.result-text {
+  margin: 0; color: var(--soft); font-size: 0.9688rem; line-height: 1.6;
+  max-width: var(--measure);
+}
+.result-text mark {
+  background: transparent; color: var(--ink); font-weight: 600;
+  border-bottom: 1px solid var(--accent);
+}
+.result-source {
+  margin: 0.45rem 0 0; font-family: var(--mono); font-size: 10px;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--faint);
+}
+.kind {
+  font-family: var(--mono); font-size: 9px; font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase;
+  border: 1px solid currentColor; border-radius: 2px;
+  padding: 0.2rem 0.42rem; flex: none;
+}
+.kind-notebook  { color: var(--accent); }
+.kind-reference { color: var(--faint); }
+.result-sep { color: var(--faint); font-weight: 400; padding: 0 0.15rem; }
