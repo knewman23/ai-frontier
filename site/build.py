@@ -151,6 +151,13 @@ Search</a>
 <a href="{CURRICULUM}">Curriculum</a>
 </div></footer>
 <script src="{base}theme.js"></script>
+
+<!-- GoatCounter. No cookies and no personal data, so no consent banner.
+     ~3.4KB gzipped and loaded async, so it never blocks render. All four
+     sites share this origin, so one site code covers them all and the paths
+     keep them apart in the dashboard. -->
+<script data-goatcounter="https://knewman23.goatcounter.com/count"
+        async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>
 """
