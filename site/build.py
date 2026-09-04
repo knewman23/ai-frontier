@@ -140,6 +140,11 @@ Search</a>
 </span>
 </div></div>
 {body}
+<div class="crest-wrap">
+<a href="{PORTFOLIO}" aria-label="Krys Newman, portfolio index">
+<img class="crest" src="{base}eagle.png" alt="" width="768" height="512">
+</a>
+</div>
 <footer class="page"><div class="wrap">
 <span>Krys Newman</span>
 <a href="{REPO}">Source on GitHub</a>
@@ -589,7 +594,7 @@ curriculum they follow is tracked separately at
     print(f"  search index: {len(SEARCH)} sections, "
           f"{(OUT / 'search-index.json').stat().st_size // 1024} KB")
 
-    for name in ("theme.js", "search.js", "og.png"):
+    for name in ("theme.js", "search.js", "og.png", "eagle.png"):
         shutil.copy2(SITE / "assets" / name, OUT / name)
     shutil.copytree(SITE / "assets" / "fonts", OUT / "fonts")
 
