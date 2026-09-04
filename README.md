@@ -1,6 +1,6 @@
 # AI Frontier
 
-Notebooks from a self-study path through neural networks and machine learning —
+Notebooks from a self-study path through neural networks and machine learning,
 built from scratch, in order, starting at the derivative and working toward
 frontier LLM research.
 
@@ -21,7 +21,7 @@ The curriculum these follow is tracked separately at
 ## Reference notebooks
 
 `references/` holds public calculus and linear algebra notebooks by other
-people — the counterweight to the from-scratch notebooks above. They lean on
+people, the counterweight to the from-scratch notebooks above. They lean on
 numpy, matplotlib and autodiff and spend their effort on diagrams and notation
 instead, which makes them the right thing to have open while working through a
 course. The annotated list is on the
@@ -38,8 +38,8 @@ a link back to the original:
 | [Transformations, matrices, eigenvectors, SVD](references/vendor/landlinear/) | Land on Vector Spaces (GWU) | CC BY 4.0 · BSD-3 |
 | [First- and second-order optimisation, norms](references/vendor/ml-refined/) | Machine Learning Refined | CC BY-NC-SA 4.0 |
 
-Two sources — fast.ai's Computational Linear Algebra and the MML book tutorials
-— ship no licence file at all. A public repo grants the right to view and fork
+Two sources, fast.ai's Computational Linear Algebra and the MML book tutorials,
+ship no licence file at all. A public repo grants the right to view and fork
 it on GitHub, not to republish it elsewhere, so those stay linked rather than
 mirrored. D2L is licensed to redistribute but is already a website, so it stays
 linked too. All of them are one command away locally:
@@ -52,7 +52,7 @@ python references/fetch.py --workspace   # copies vendor/ into references/run/
 jupyter lab references/run/
 ```
 
-Run them from `references/run/` rather than `references/vendor/` — the vendored
+Run them from `references/run/` rather than `references/vendor/`, because the vendored
 copies stay pristine so the site renders them, and executing one in place adds
 tens of megabytes of embedded animation frames to the diff.
 
@@ -60,7 +60,7 @@ See [references/README.md](references/README.md) for the full breakdown.
 
 ## Search
 
-Every section of every notebook — mine and the references, code included — is
+Every section of every notebook, mine and the references, code included, is
 indexed at build time into `search-index.json` and searched client-side from
 [/search/](https://knewman23.github.io/ai-frontier/search/). No service, no
 dependency: one JSON file and 150 lines of JavaScript.
@@ -79,14 +79,14 @@ jupyter lab
 ```
 
 Graph drawing also needs the graphviz **system binary**, which pip can't
-install — `brew install graphviz` on macOS, `apt install graphviz` on Debian.
+install: `brew install graphviz` on macOS, `apt install graphviz` on Debian.
 
 ## Layout
 
 ```
 notebooks/    numbered, in the order they were worked through
 references/   other people's calculus and linear algebra notebooks
-  vendor/     committed verbatim, licence included — what the site renders
+  vendor/     committed verbatim, licence included, what the site renders
   run/        working copies for actually running them (gitignored)
   external/   fetched on demand, never committed (gitignored)
 site/         the static-site generator behind knewman23.github.io/ai-frontier
@@ -97,4 +97,4 @@ values render on GitHub without anyone needing to run a kernel.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).

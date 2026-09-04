@@ -2,16 +2,16 @@
   "title": "Reference notebooks",
   "kicker": "Reference · Other people's work",
   "lede": "Public calculus and linear algebra notebooks worth keeping open while working through the curriculum. Diagram-heavy, notation-first, and unapologetic about reaching for numpy, matplotlib and autodiff instead of rebuilding them by hand.",
-  "note": "None of this is my work. Everything whose licence permits redistribution is reproduced here in full and unmodified, each page carrying its author, the work it comes from, its licence and a link back to the original; a runnable copy lives in <code>references/vendor/</code> in the repo. Two sources ship no licence at all, which under GitHub's terms means all rights reserved &mdash; those stay linked at the source and are fetched on demand by <code>references/fetch.py</code>.",
+  "note": "None of this is my work. Everything whose licence permits redistribution is reproduced here in full and unmodified, each page carrying its author, the work it comes from, its licence and a link back to the original; a runnable copy lives in <code>references/vendor/</code> in the repo. Two sources ship no licence at all, which under GitHub's terms means all rights reserved, so those stay linked at the source and are fetched on demand by <code>references/fetch.py</code>.",
   "groups": [
     {
       "name": "Linear algebra",
-      "blurb": "Vectors, matrices as transformations, eigendecomposition and SVD — drawn, not just derived.",
+      "blurb": "Vectors, matrices as transformations, eigendecomposition and SVD, drawn rather than just derived.",
       "items": [
         {
           "title": "Math: Linear Algebra",
-          "source": "Aurélien Géron — Hands-On Machine Learning, 3rd ed.",
-          "why": "The strongest standalone notebook of the set: every idea gets a matplotlib picture. Vectors and norms, addition as translation, matrices as linear transformations, determinants as signed area, inverses, rank and projections — all in numpy, with the notation written out beside each plot.",
+          "source": "Aurélien Géron · Hands-On Machine Learning, 3rd ed.",
+          "why": "The strongest standalone notebook of the set: every idea gets a matplotlib picture. Vectors and norms, addition as translation, matrices as linear transformations, determinants as signed area, inverses, rank and projections, all in numpy, with the notation written out beside each plot.",
           "topics": [
             "Vectors",
             "Matrix transformations",
@@ -46,7 +46,7 @@
         {
           "title": "ML Foundations: Linear Algebra I & II",
           "source": "Jon Krohn",
-          "why": "A dense notation reference. Scalars through tensors, norms, dot products, matrix multiplication, eigendecomposition and SVD — each written first in mathematical notation, then in numpy, PyTorch and TensorFlow side by side, which is useful when the same object has three names depending on which library you're reading.",
+          "why": "A dense notation reference. Scalars through tensors, norms, dot products, matrix multiplication, eigendecomposition and SVD, each written first in mathematical notation, then in numpy, PyTorch and TensorFlow side by side, which is useful when the same object has three names depending on which library you're reading.",
           "topics": [
             "Tensors",
             "Norms",
@@ -81,7 +81,7 @@
         },
         {
           "title": "Land on Vector Spaces",
-          "source": "Engineers Code — Lorena Barba group, GWU",
+          "source": "Engineers Code · Lorena Barba group, GWU",
           "why": "Four notebooks that treat a matrix as a thing that moves space around. Animated transformations, change of basis, eigenvectors as the directions a transformation leaves pointing where they were, and SVD built up visually. The closest thing in notebook form to 3Blue1Brown's linear algebra series.",
           "topics": [
             "Linear transformations",
@@ -114,7 +114,7 @@
         },
         {
           "title": "Computational Linear Algebra",
-          "source": "Rachel Thomas — fast.ai / USF MSDS",
+          "source": "Rachel Thomas · fast.ai / USF MSDS",
           "why": "Linear algebra taught backwards from its applications: topic modelling with NMF and SVD, background removal with robust PCA, PageRank via eigendecomposition, QR factorisation implemented and then profiled against LAPACK. numpy, scipy and scikit-learn throughout, with a video lecture per notebook.",
           "topics": [
             "SVD",
@@ -124,7 +124,7 @@
             "QR",
             "Conditioning"
           ],
-          "licence": "No licence declared — fetched, not redistributed",
+          "licence": "No licence declared; fetched, not redistributed",
           "availability": {
             "kind": "fetch",
             "name": "fastai-nla"
@@ -141,7 +141,7 @@
           ]
         },
         {
-          "title": "Mathematics for Machine Learning — tutorials",
+          "title": "Mathematics for Machine Learning: tutorials",
           "source": "Deisenroth, Faisal & Ong",
           "why": "The companion notebooks to the MML book: PCA derived from orthogonal projections, linear regression from maximum likelihood, and a Gaussian mixture fitted with EM. This is where the linear algebra stops being abstract and starts being a model. Pairs with the free PDF of the book.",
           "topics": [
@@ -150,7 +150,7 @@
             "Linear regression",
             "Gaussian mixtures"
           ],
-          "licence": "No licence declared — fetched, not redistributed",
+          "licence": "No licence declared; fetched, not redistributed",
           "availability": {
             "kind": "fetch",
             "name": "mml-book"
@@ -178,8 +178,8 @@
       "items": [
         {
           "title": "Math: Differential Calculus",
-          "source": "Aurélien Géron — Hands-On Machine Learning, 3rd ed.",
-          "why": "Slope of a line, then the limit definition, then the derivative — with an animation of the secant collapsing onto the tangent rather than a paragraph asking you to imagine it. Runs through differentiability, the differentiation rules, higher-order derivatives, partial derivatives, gradients, Jacobians and Hessians, and proves each rule at the end.",
+          "source": "Aurélien Géron · Hands-On Machine Learning, 3rd ed.",
+          "why": "Slope of a line, then the limit definition, then the derivative, with an animation of the secant collapsing onto the tangent rather than a paragraph asking you to imagine it. Runs through differentiability, the differentiation rules, higher-order derivatives, partial derivatives, gradients, Jacobians and Hessians, and proves each rule at the end.",
           "topics": [
             "Limits",
             "Tangents",
@@ -214,7 +214,7 @@
         {
           "title": "ML Foundations: Calculus I & II",
           "source": "Jon Krohn",
-          "why": "Limits and the delta method, then the rules — product, quotient, chain — then partial derivatives and the gradient, and finally the same derivatives taken automatically by PyTorch and TensorFlow autodiff. The bridge from a derivative computed by hand to the one a framework hands back.",
+          "why": "Limits and the delta method, then the rules (product, quotient, chain), then partial derivatives and the gradient, and finally the same derivatives taken automatically by PyTorch and TensorFlow autodiff. The bridge from a derivative computed by hand to the one a framework hands back.",
           "topics": [
             "Limits",
             "Chain rule",
@@ -247,7 +247,7 @@
           ]
         },
         {
-          "title": "Machine Learning Refined — course notes",
+          "title": "Machine Learning Refined: course notes",
           "source": "Watt, Borhani & Katsaggelos",
           "why": "Visualisation-first treatment of the calculus optimisation actually uses: first- and second-order Taylor approximations drawn on the surface they approximate, gradient descent and Newton's method animated on the same cost function. Leans towards building things from scratch, so read it for the pictures.",
           "topics": [
@@ -289,7 +289,7 @@
       "blurb": "Book-length references where the maths sits next to the models that use it.",
       "items": [
         {
-          "title": "Dive into Deep Learning — maths chapters",
+          "title": "Dive into Deep Learning: maths chapters",
           "source": "Zhang, Lipton, Li & Smola",
           "why": "Every page is a runnable notebook and every chapter carries figures. The preliminaries cover linear algebra, calculus and automatic differentiation in the framework you'll actually use; the appendix goes further into the geometry of linear-algebraic operations, eigendecomposition, and single- and multivariable calculus. Notebooks download per page for PyTorch, TensorFlow, JAX or MXNet. Left linked rather than mirrored: the book is already a website, and its notebooks ship without saved outputs, so a copy here would read worse than the original.",
           "topics": [
@@ -359,7 +359,7 @@
     "handson-ml3/math_linear_algebra.ipynb": {
       "slug": "geron-linear-algebra",
       "title": "Math: Linear Algebra",
-      "lede": "Vectors and norms, addition as translation, matrices as linear transformations, determinants as signed area, inverses, rank and projections — every idea with the matplotlib picture that makes it obvious.",
+      "lede": "Vectors and norms, addition as translation, matrices as linear transformations, determinants as signed area, inverses, rank and projections, every idea with the matplotlib picture that makes it obvious.",
       "author": "Aurélien Géron",
       "work": "Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow, 3rd ed.",
       "licence": "Apache-2.0",
@@ -370,7 +370,7 @@
     "handson-ml3/math_differential_calculus.ipynb": {
       "slug": "geron-differential-calculus",
       "title": "Math: Differential Calculus",
-      "lede": "Slope of a line, then the limit definition, then the derivative — through the differentiation rules, higher-order and partial derivatives, gradients, Jacobians and Hessians, with every rule proved at the end. Its secant-to-tangent animations only appear once the notebook is run, so open it in Colab or from the copy in the repo.",
+      "lede": "Slope of a line, then the limit definition, then the derivative, through the differentiation rules, higher-order and partial derivatives, gradients, Jacobians and Hessians, with every rule proved at the end. Its secant-to-tangent animations only appear once the notebook is run, so open it in Colab or from the copy in the repo.",
       "author": "Aurélien Géron",
       "work": "Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow, 3rd ed.",
       "licence": "Apache-2.0",
@@ -414,7 +414,7 @@
     "ml-foundations/4-calculus-ii.ipynb": {
       "slug": "krohn-calculus-ii",
       "title": "Calculus II: Partial Derivatives & Integrals",
-      "lede": "Partial derivatives and the gradient, the chain rule as backpropagation uses it, and integrals — the calculus that gradient descent actually runs on.",
+      "lede": "Partial derivatives and the gradient, the chain rule as backpropagation uses it, and integrals: the calculus that gradient descent actually runs on.",
       "author": "Jon Krohn",
       "work": "Machine Learning Foundations",
       "licence": "MIT",
@@ -469,7 +469,7 @@
     "ml-refined/3_2_First.ipynb": {
       "slug": "mlr-first-order-condition",
       "title": "The First-Order Optimality Condition",
-      "lede": "Where the derivative vanishes, and why that condition is what every first-order method is chasing — with the stationary points drawn on the functions themselves.",
+      "lede": "Where the derivative vanishes, and why that condition is what every first-order method is chasing, with the stationary points drawn on the functions themselves.",
       "author": "Jeremy Watt, Reza Borhani & Aggelos Katsaggelos",
       "work": "Machine Learning Refined (Cambridge University Press)",
       "licence": "CC BY-NC-SA 4.0",
@@ -491,7 +491,7 @@
     "ml-refined/3_5_Descent.ipynb": {
       "slug": "mlr-gradient-descent",
       "title": "Gradient Descent",
-      "lede": "Gradient descent derived from the first-order approximation, then run and animated across cost surfaces — including what the step size does to the path it takes.",
+      "lede": "Gradient descent derived from the first-order approximation, then run and animated across cost surfaces, including what the step size does to the path it takes.",
       "author": "Jeremy Watt, Reza Borhani & Aggelos Katsaggelos",
       "work": "Machine Learning Refined (Cambridge University Press)",
       "licence": "CC BY-NC-SA 4.0",
@@ -513,7 +513,7 @@
     "ml-refined/4_3_Newtons.ipynb": {
       "slug": "mlr-newtons-method",
       "title": "Newton's Method",
-      "lede": "Newton's method as repeated quadratic approximation, animated against gradient descent on the same function — where curvature information buys faster convergence, and where it doesn't.",
+      "lede": "Newton's method as repeated quadratic approximation, animated against gradient descent on the same function, where curvature information buys faster convergence, and where it doesn't.",
       "author": "Jeremy Watt, Reza Borhani & Aggelos Katsaggelos",
       "work": "Machine Learning Refined (Cambridge University Press)",
       "licence": "CC BY-NC-SA 4.0",

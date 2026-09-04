@@ -27,10 +27,11 @@ SEARCH: list[dict] = []
 
 TITLE = "AI Frontier"
 TAGLINE = ("Notebooks from a self-study path through neural networks and "
-           "machine learning — built from scratch, in order.")
+           "machine learning, built from scratch, in order.")
 REPO = "https://github.com/knewman23/ai-frontier"
 CURRICULUM = "https://knewman23.github.io/backprop-to-frontier/"
 PORTFOLIO = "https://knewman23.github.io/"
+SITE_URL = "https://knewman23.github.io/ai-frontier/"
 REFERENCES = SITE / "references.json"
 
 # Lifted from knewman23.github.io so both sites share one theme component.
@@ -74,8 +75,8 @@ SEARCH_PAGE = """<main class="wrap">
 <div class="hero measure">
 <p class="kicker">Search</p>
 <h1>Find it</h1>
-<p class="lede">Every section of every notebook here &mdash; mine and the
-references &mdash; indexed by heading. Code included, so searching for
+<p class="lede">Every section of every notebook here, mine and the
+references alike, indexed by heading. Code included, so searching for
 <code>np.linalg.svd</code> works as well as searching for eigenvector.</p>
 </div>
 <form class="search-form" id="search-form" role="search">
@@ -102,7 +103,8 @@ def slug_of(path: Path) -> str:
 
 
 def shell(body: str, *, title: str, description: str, base: str,
-          crumbs: str, extra_head: str = "") -> str:
+          crumbs: str, extra_head: str = "", path: str = "") -> str:
+    """path is the page's location under SITE_URL, "" for the index."""
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -110,6 +112,16 @@ def shell(body: str, *, title: str, description: str, base: str,
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(title)}</title>
 <meta name="description" content="{html.escape(description)}">
+<link rel="canonical" href="{SITE_URL}{path}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{html.escape(title)}">
+<meta property="og:description" content="{html.escape(description)}">
+<meta property="og:url" content="{SITE_URL}{path}">
+<meta property="og:image" content="{SITE_URL}og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AI Frontier: notebooks from a self-study path through neural networks and machine learning.">
+<meta name="twitter:card" content="summary_large_image">
 {FAVICON}
 <link rel="preload" href="{base}fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{base}fonts/plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -276,7 +288,7 @@ def reference_notebook_pages(data: dict) -> dict[str, dict]:
         if not path.exists():
             raise SystemExit(f"references.json points at a missing notebook: {path}")
 
-        # Reference notebooks keep their own H1s — those are their sections.
+        # Reference notebooks keep their own H1s; those are their sections.
         _, body = render_notebook(path, strip_h1=False)
         headings = headings_from_body(body, levels="12")
 
@@ -326,13 +338,14 @@ report problems against.
         dest = OUT / "references" / meta["slug"]
         dest.mkdir(parents=True)
         (dest / "index.html").write_text(shell(
-            page, title=f'{meta["title"]} — {meta["author"]}',
+            page, title=f'{meta["title"]} · {meta["author"]}',
             description=meta["lede"], base="../../", crumbs=crumbs,
+            path=f'references/{meta["slug"]}/',
             extra_head=MATHJAX))
         rendered[rel] = meta
         SEARCH.extend(index_records(
             body, url=f"references/{meta['slug']}/", title=meta["title"],
-            kind="reference", source=f'{meta["author"]} — {meta["work"]}'))
+            kind="reference", source=f'{meta["author"]} · {meta["work"]}'))
     return rendered
 
 
@@ -356,10 +369,10 @@ def references_page() -> str:
         avail = item.get("availability", {})
         kind = avail.get("kind", "link")
         if kind == "vendored":
-            where = ("Rendered in full below &mdash; runnable copy at "
+            where = ("Rendered in full below, runnable copy at "
                      f'<code>{html.escape(avail["path"])}</code>')
         elif kind == "fetch":
-            where = ("Fetch locally &mdash; "
+            where = ("Fetch locally: "
                      f'<code>python references/fetch.py {html.escape(avail["name"])}</code>')
         else:
             where = "Read at the source"
@@ -478,8 +491,9 @@ def main() -> None:
         dest = OUT / e["slug"]
         dest.mkdir()
         (dest / "index.html").write_text(shell(
-            page, title=f'{e["title"]} — {TITLE}', description=e["lede"],
-            base="../", crumbs=crumbs, extra_head=MATHJAX))
+            page, title=f'{e["title"]} · {TITLE}', description=e["lede"],
+            base="../", crumbs=crumbs, extra_head=MATHJAX,
+            path=f'{e["slug"]}/'))
 
     # index
     refs = json.loads(REFERENCES.read_text())
@@ -494,7 +508,7 @@ def main() -> None:
         if len(secs) > len(shown):
             chips += f"<span>+{len(secs) - len(shown)} more</span>"
         cards.append(f"""<li class="entry"><a href="{e["slug"]}/">
-<div class="num">{num.group(1) if num else "&mdash;"}</div>
+<div class="num">{num.group(1) if num else "&ndash;"}</div>
 <div>
 <h2>{html.escape(e["title"])}</h2>
 <p>{html.escape(e["lede"])}</p>
@@ -519,7 +533,7 @@ def main() -> None:
 <div>
 <h2>Reference notebooks</h2>
 <p>Public calculus and linear algebra notebooks worth keeping open alongside
-these — diagram-heavy, notation-first, and happy to use numpy, matplotlib and
+these: diagram-heavy, notation-first, and happy to use numpy, matplotlib and
 autodiff rather than rebuild them. Six are committed to the repo and runnable
 locally; the rest are one fetch away.</p>
 <div class="topics">{REF_CHIPS}</div>
@@ -536,29 +550,31 @@ curriculum they follow is tracked separately at
 </main>"""
 
     (OUT / "index.html").write_text(shell(
-        index, title=f"{TITLE} — Krys Newman", description=TAGLINE,
+        index, title=f"{TITLE} · Krys Newman", description=TAGLINE,
         base="",
         crumbs=(f'<a href="{PORTFOLIO}"><b>Krys Newman</b></a>'
                 '<span class="sep">/</span>'
-                f'<span class="here">{TITLE}</span>')))
+                f'<span class="here">{TITLE}</span>'),
+        path=""))
 
     refs_dir = OUT / "references"
     refs_dir.mkdir()
     refs_data = json.loads(REFERENCES.read_text())
     vendored = reference_notebook_pages(refs_data)
     (refs_dir / "index.html").write_text(shell(
-        references_page(), title=f'{refs_data["title"]} — {TITLE}',
+        references_page(), title=f'{refs_data["title"]} · {TITLE}',
         description=refs_data["lede"], base="../",
         crumbs=(f'<a href="{PORTFOLIO}"><b>Krys Newman</b></a>'
                 '<span class="sep">/</span>'
                 '<a href="../">AI Frontier</a>'
                 '<span class="sep">/</span>'
-                f'<span class="here">{html.escape(refs_data["title"])}</span>')))
+                f'<span class="here">{html.escape(refs_data["title"])}</span>'),
+        path="references/"))
 
     search_dir = OUT / "search"
     search_dir.mkdir()
     (search_dir / "index.html").write_text(shell(
-        SEARCH_PAGE, title=f"Search — {TITLE}",
+        SEARCH_PAGE, title=f"Search · {TITLE}",
         description=f"Search every notebook and reference on {TITLE}.",
         base="../",
         crumbs=(f'<a href="{PORTFOLIO}"><b>Krys Newman</b></a>'
@@ -566,13 +582,14 @@ curriculum they follow is tracked separately at
                 '<a href="../">AI Frontier</a>'
                 '<span class="sep">/</span>'
                 '<span class="here">Search</span>'),
+        path="search/",
         extra_head='<script defer src="../search.js"></script>'))
     (OUT / "search-index.json").write_text(
         json.dumps(SEARCH, separators=(",", ":"), ensure_ascii=False))
     print(f"  search index: {len(SEARCH)} sections, "
           f"{(OUT / 'search-index.json').stat().st_size // 1024} KB")
 
-    for name in ("theme.js", "search.js"):
+    for name in ("theme.js", "search.js", "og.png"):
         shutil.copy2(SITE / "assets" / name, OUT / name)
     shutil.copytree(SITE / "assets" / "fonts", OUT / "fonts")
 
