@@ -5,6 +5,18 @@
    diverges on purpose: this site carries long technical prose, so body copy is
    serif at a fixed measure. */
 
+/* Self-hosted, the same files knewman23.github.io serves, so headings and
+   labels render in Space Grotesk and Plex Mono here too instead of silently
+   falling back to system-ui. */
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("fonts/space-grotesk-var.woff2") format("woff2-variations");
+  font-weight: 300 700; font-style: normal; font-display: swap;
+}
+@font-face { font-family:"IBM Plex Mono"; src:url("fonts/plex-mono-400.woff2") format("woff2"); font-weight:400; font-style:normal; font-display:swap; }
+@font-face { font-family:"IBM Plex Mono"; src:url("fonts/plex-mono-500.woff2") format("woff2"); font-weight:500; font-style:normal; font-display:swap; }
+@font-face { font-family:"IBM Plex Mono"; src:url("fonts/plex-mono-600.woff2") format("woff2"); font-weight:600; font-style:normal; font-display:swap; }
+
 :root {
   color-scheme: light;
   --bg:      #fbfbf9;

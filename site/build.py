@@ -41,6 +41,17 @@ try {
 } catch (e) { /* private mode: fall through to prefers-color-scheme */ }
 </script>"""
 
+# The same "k" mark knewman23.github.io serves, inline so the three sites
+# share one favicon with no file to keep in sync.
+FAVICON = (
+    "<link rel=\"icon\" href=\"data:image/svg+xml,"
+    "%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E"
+    "%3Crect width='32' height='32' rx='3' fill='%230e0f11'/%3E"
+    "%3Ctext x='16' y='23' font-family='monospace' font-size='19' "
+    "font-weight='700' fill='%23fff' text-anchor='middle'%3Ek%3C/text%3E"
+    "%3C/svg%3E\">"
+)
+
 TOGGLE_BUTTON = """<button class="theme keep" id="theme" type="button" aria-live="polite">
 <svg class="i-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
 <svg class="i-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/></svg>
@@ -99,9 +110,9 @@ def shell(body: str, *, title: str, description: str, base: str,
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(title)}</title>
 <meta name="description" content="{html.escape(description)}">
-<link rel="icon" href="{base}favicon.ico" sizes="any">
-<link rel="icon" type="image/png" href="{base}favicon.png">
-<link rel="apple-touch-icon" href="{base}favicon.png">
+{FAVICON}
+<link rel="preload" href="{base}fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{base}fonts/plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{base}style.css">
 {THEME_BOOT}
 {extra_head}
@@ -561,8 +572,9 @@ curriculum they follow is tracked separately at
     print(f"  search index: {len(SEARCH)} sections, "
           f"{(OUT / 'search-index.json').stat().st_size // 1024} KB")
 
-    for name in ("favicon.ico", "favicon.png", "theme.js", "search.js"):
+    for name in ("theme.js", "search.js"):
         shutil.copy2(SITE / "assets" / name, OUT / name)
+    shutil.copytree(SITE / "assets" / "fonts", OUT / "fonts")
 
     (OUT / ".nojekyll").write_text("")
     print(f"built {len(entries)} notebook page(s) + {len(vendored)} reference "
