@@ -1,0 +1,5 @@
+# Merge and diff notebooks cell-by-cell instead of line-by-line on the raw JSON.
+# Requires `pip install nbdime && nbdime config-git --enable` in each clone;
+# without it git falls back to its default behaviour rather than erroring.
+*.ipynb diff=jupyternotebook
+*.ipynb merge=jupyternotebook
