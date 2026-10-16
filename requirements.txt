@@ -5,3 +5,4 @@ graphviz
 pandas>=2.0
 openpyxl
 scipy>=1.12
+torch>=2.0
