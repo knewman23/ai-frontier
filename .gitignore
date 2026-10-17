@@ -25,3 +25,6 @@ references/external/
 # Working copies of the reference notebooks. references/vendor/ stays pristine
 # so the site renders it and running a notebook doesn't churn the repo.
 references/run/
+
+# Claude Code, local to the machine rather than the repo
+.claude/
